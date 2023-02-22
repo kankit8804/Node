@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Bootstrap CDN-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+    <!--  datatable CDN for pagination and searching-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.13.2/datatables.min.css"/>
+
+
+    <!-- stylesheet CSS -->
+    <style> table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      th, td {
+        text-align: left;
+        padding: 8px;
+      }
+      th {
+        background-color: #f2f2f2;
+      }
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+      tr:hover {
+        background-color: #ddd;
+      }
+      .footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+      
+      </style> 
+    <!-- style end -->
+
+   
+</head>
+<body>
+
+    <div class="header">
+        <nav class="navbar bg-primary" data-bs-theme="dark">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="/">Cointab</a>
+            </div>
+          </nav>       
+    </div>
+
+
+
+<!-- list of randome user  -->
+    <table id="table">
+      <thead>
+        
+          <tr>
+            
+            <th>Name</th>
+            <th>Age</th>
+            <th>Email</th>
+            <th>City</th>
+          </tr>
+          
+        
+      </thead>
+      <tbody>
+        
+        <!-- Table rows will be generated dynamically using Database -->
+            
+        <% for (let i = 0; i < data.length; i++) { %>
+          <tr>
+            
+            <td><%= data[i].Name %></td>
+            <td><%= data[i].Age %></td>
+            <td><%= data[i].Email %></td>
+            <td><%= data[i].City %></td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+
+    <div class="footer" >
+      <h6>Design and Develop BY Ankit kumar</h6>
+  
+  </div>
+    
+    <!-- Jquery Javascript query for Dom operation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js" integrity="sha512-STof4xm1wgkfm7heWqFJVn58Hm3EtS31XFaagaa8VMReCXAkQnJZ+jEy8PCC/iT18dFy95WcExNHFTqLyp72eQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.13.2/datatables.min.js"></script>
+
+
+<script>
+    $(document).ready(function(){
+      $("table").DataTable({
+        order:[0,'desc']
+      });
+    });    
+
+
+</script>
+
+    
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+<!-- Bootstrap CDN  -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
+<!-- end -->
+
+<!-- CSS  -->
+<style>
+    a{
+        text-decoration: none;   
+    }
+    .footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+.fetching {
+    background-color: red;
+    color: white;
+  }
+</style>
+
+    <title><%=title %></title>
+
+</head>
+<body>
+    <!-- header  -->
+    <div class="header">
+        <nav class="navbar bg-primary" data-bs-theme="dark">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="/">Cointab</a>
+            </div>
+          </nav>
+          
+    </div>
+
+  <!-- Buttons  -->
+    <div class="Body" style="margin: 10px;">
+        <div class="d-grid gap-2 col-6 mx-auto">
+            <button  class="btn btn-primary" type="button" id="fetch-button">Featch User</button>
+            
+            <form class="d-grid gap-2 col-12 mx-auto" action="/delete" method="POST" id="delete-form">
+                <button class="btn btn-primary" type="submit">Delete All Data</button>
+              </form>
+
+            <button class="btn btn-primary" type="button" id="userdetails"><a href="/data" style="color:white">User Details</a></button></a>
+          </div>
+    </div>
+
+<!-- End  -->
+
+<div class="footer" >
+    <h6>Design and Develop BY Ankit kumar</h6>
+
+</div>
+
+<script>
+    // Add event listener to button
+    document.getElementById('fetch-button').addEventListener('click', fetchData);
+
+    const fetchdatabutton=document.getElementById('fetch-button');
+    function fetchData() {
+        // Fetch data from API
+
+        fetchdatabutton.classList.add('fetching');
+
+        fetchdatabutton.disabled=true;
+
+        fetch('https://randomuser.me/api/?results=50')
+            .then(res => res.json())
+            .then(data => {
+                 console.log(data);
+
+                // Create new XMLHttpRequest object
+                const xhr = new XMLHttpRequest();
+
+                
+                // Set up request
+                xhr.open('POST', '/save-data');
+                
+
+                // Set up request headers
+                xhr.setRequestHeader('Content-Type', 'application/json');
+
+                // Set up request body
+                const body = JSON.stringify(data.results);
+
+                // Send request
+                xhr.send(body);
+
+                // Handle response
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        console.log(xhr.responseText);
+                    } else {
+                        console.error('Error:', xhr.status);
+                    }
+                    fetchdatabutton.disabled=false;
+                    fetchdatabutton.classList.remove('fetching');
+
+                };  
+            })
+            .catch(error => console.error('Error:', error));
+    }
+
+    const deleteForm = document.getElementById('delete-form');
+  deleteForm.addEventListener('submit', (event) => {
+    const confirmation = confirm("Are you sure you want to delete all data?");
+    if (!confirmation) {
+      event.preventDefault(); // cancel the form submission
+    }
+  });
+</script>
+    
+</body>
+</html>
